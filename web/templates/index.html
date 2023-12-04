@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/css/pico.min.css">
+    <link rel="stylesheet" href="/css/fontawesome.min.css">
+    <link rel="stylesheet" href="/css/atom-one-dark.min.css">
+    <link rel="stylesheet" href="/css/opendyndns.css">
+    <title>Open DynDNS</title>
+</head>
+
+<body>
+    <nav>
+        <ul></ul>
+        <ul>
+            <li><strong>Open DynDNS</strong></li>
+        </ul>
+        <ul></ul>
+    </nav>
+
+    <button class="htmx-indicator" aria-busy="true">Loading…</button>
+
+    <main id="main" class="container">
+
+        <article>
+            <h3 class="text-center">Choose your subdomain</h3>
+            <form hx-post="/htmx/host" hx-target="#main">
+                <div class="grid">
+                    <input type="text" name="hostname" placeholder="my-hostname" required>
+
+                    <select name="domain">
+                        <?php foreach ($domains as $domain): ?>
+                        <option value="<?= $domain; ?>">
+                            <?= $domain; ?>
+                        </option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
+                <button type="submit">Access</button>
+            </form>
+        </article>
+
+    </main>
+
+    <script src="/js/opendyndns.js"></script>
+    <script src="/js/htmx.min.js"></script>
+    <script src="/js/highlight.min.js"></script>
+    <script src="/js/curl.min.js"></script>
+</body>
+
+</html>

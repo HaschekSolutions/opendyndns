@@ -1,0 +1,143 @@
+tr.htmx-swapping td {
+    opacity: 0;
+    transition: opacity 1s ease-out;
+}
+
+.badge {
+    background-color: #999;
+    color: white;
+    padding: 4px 8px;
+    margin: 2px;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.htmx-indicator {
+    display: none;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.version {
+    font-size: 0.8em;
+    color: #999;
+}
+
+/* pico css overrides */
+
+:root {
+    --form-element-spacing-vertical: 0.15rem;
+    --form-element-spacing-horizontal: 1rem;
+}
+
+/** dynamic nav bar **/
+
+.topnav {
+    overflow: hidden;
+}
+
+.topnav a {
+    float: left;
+    display: block;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.topnav .icon {
+    display: none;
+}
+
+@media screen and (max-width: 775px) {
+    .topnav a:not(:first-child) {
+        display: none;
+    }
+
+    .topnav a.icon {
+        float: right;
+        display: block;
+    }
+}
+
+@media screen and (max-width: 775px) {
+    .topnav.responsive {
+        position: relative;
+    }
+
+    .topnav.responsive a.icon {
+        position: absolute;
+        right: 0;
+        top: 0;
+    }
+
+    .topnav.responsive a {
+        float: none;
+        display: block;
+        text-align: left;
+    }
+}
+
+/** tab support for admin page **/
+
+[role="tabs"] {
+    display: flex;
+  }
+  
+  [role="tabs"] section {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+  }
+  
+  [role="tabs"] figure {
+    flex-grow: 1;
+    width: 100%;
+    height: 100%;
+    display: none;
+  }
+  
+  [role="tabs"] [type="radio"]:checked + figure {
+    display: block;
+  }
+  
+  nav[role="tab-control"] label.active {
+    color: var(--primary);
+    cursor: pointer;
+  }
+
+
+/** alert styling **/
+  
+.alert-danger {
+    --background-color: #ffebee;
+    --icon: var(--icon-invalid);
+    --color: #b71c1c;
+}
+
+.alert-warning {
+    --background-color: #fff8e1;
+    --icon: url(data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='rgba(179, 78, 0, 0.999)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cline x1='12' y1='8' x2='12' y2='12'%3E%3C/line%3E%3Cline x1='12' y1='16' x2='12.01' y2='16'%3E%3C/line%3E%3C/svg%3E);
+    --color: #994300;
+}
+
+.alert-success {
+    --background-color: #e8f5e9;
+    --icon: var(--icon-valid);
+    --color: #1b5e20;
+}
+
+.alert {
+    margin-bottom: var(--spacing);
+    padding: var(--form-element-spacing-vertical) var(--form-element-spacing-horizontal);
+    border-radius: var(--border-radius);
+    color: var(--color);
+    background-color: var(--background-color);
+    border: 1px solid var(--background-color);
+    background-image: var(--icon);
+    background-position: center left var(--form-element-spacing-vertical);
+    background-size: calc( var(--font-size) * 1.5 ) auto;
+    padding-left: calc(var(--form-element-spacing-vertical) * 2 + calc( var(--font-size) * 1.5 ));
+}

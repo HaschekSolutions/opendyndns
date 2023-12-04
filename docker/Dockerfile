@@ -2,7 +2,7 @@ FROM alpine:3.18
 
 LABEL org.opencontainers.image.source = "https://github.com/HaschekSolutions/opendyndns"
 
-RUN apk add --no-cache php nginx php-openssl php-mbstring php-json php-fpm dnsmasq sudo
+RUN apk add --no-cache php nginx php-openssl php-mbstring php-session php-json php-fpm dnsmasq sudo
 RUN mkdir -p /var/www/opendyndns
 WORKDIR /var/www/opendyndns
 

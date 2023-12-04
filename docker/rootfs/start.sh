@@ -19,10 +19,10 @@ echo ' [+] Setting up config.ini'
 
 _buildConfig() {
     echo "<?php"
-    echo "define('DOMAINS',${DOMAINS:-localhost});"
-    echo "define('URL',${URL:-http://localhost:8080});"
+    echo "define('DOMAINS','${DOMAINS:-localhost}');"
+    echo "define('URL','${URL:-http://localhost:8080}');"
 }
 
-_buildConfig > inc/config.inc.php
+_buildConfig > web/inc/config.inc.php
 
 tail -f logs/*.log

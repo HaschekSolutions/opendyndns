@@ -11,7 +11,7 @@ services:
       - './web:/var/www/opendyndns/web'
     environment:
       - URL=http://localhost:8080
-      - DOMAINS=example.com
+      - DOMAINS=example.com,orf.at
 
     ports:
       - '53:53/udp'

@@ -309,3 +309,4 @@ Dec  4 15:19:14 dnsmasq[70]: query[A] rubeliknupf.at from 172.20.0.1
 Dec  4 15:19:14 dnsmasq[70]: config error is REFUSED (EDE: not ready)
 Dec  4 15:19:14 dnsmasq[70]: query[AAAA] rubeliknupf.at from 172.20.0.1
 Dec  4 15:19:14 dnsmasq[70]: config error is REFUSED (EDE: not ready)
+Dec  4 15:25:43 dnsmasq[70]: exiting on receipt of SIGTERM
