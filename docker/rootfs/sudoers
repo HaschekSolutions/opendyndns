@@ -1,0 +1,1 @@
+nginx      ALL = NOPASSWD: /etc/restart-dnsmasq.sh

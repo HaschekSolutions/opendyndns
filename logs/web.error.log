@@ -1,0 +1,1 @@
+2023/12/04 14:55:27 [error] 14#14: *1 open() "/var/www/opendyndns/web/favicon.ico" failed (2: No such file or directory), client: 172.20.0.1, server: , request: "GET /favicon.ico HTTP/1.1", host: "localhost:8080", referrer: "http://localhost:8080/"
