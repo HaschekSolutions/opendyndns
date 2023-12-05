@@ -2,6 +2,7 @@
 
 function restartDNSMASQ() {
     exec("sudo /etc/restart-dnsmasq.sh");
+    error_log("[i] Restarted dnsmasq");
 }
 
 function updateHostname($hostname,$config)
@@ -17,6 +18,7 @@ function updateHostname($hostname,$config)
     if($config['ipv4'] || $config['ipv6'])
         restartDNSMASQ();
     file_put_contents($file, $data);
+    error_log("[i] Updated hostfile for $hostname");
 }
 
 function getUserIP()

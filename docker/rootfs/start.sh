@@ -4,11 +4,11 @@ echo 'Starting Open DynDNS'
 
 cd /var/www/opendyndns
 
-echo ' [+] Starting php'
-php-fpm81
+# echo ' [+] Starting php'
+# php-fpm81
 
-echo ' [+] Starting nginx'
-nginx
+# echo ' [+] Starting nginx'
+# nginx
 
 echo ' [+] Starting dnsmasq'
 dnsmasq
@@ -25,4 +25,6 @@ _buildConfig() {
 
 _buildConfig > web/inc/config.inc.php
 
-tail -f logs/*.log
+#tail -f logs/*.log
+cd web
+php -S 0.0.0.0:80 index.php

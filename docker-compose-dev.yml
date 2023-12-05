@@ -14,5 +14,11 @@ services:
       - DOMAINS=example.com,orf.at
 
     ports:
-      - '53:53/udp'
-      - '8080:80/tcp'
+      - mode: host
+        protocol: udp
+        published: 53
+        target: 53
+      - mode: host
+        protocol: tcp
+        published: 8080
+        target: 80
