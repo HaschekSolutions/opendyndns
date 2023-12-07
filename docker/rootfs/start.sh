@@ -22,6 +22,9 @@ _buildConfig() {
     echo "<?php"
     echo "define('DOMAINS','${DOMAINS:-localhost}');"
     echo "define('URL','${URL:-http://localhost:8080}');"
+    echo "define('ALLOW_PRIVATE_IP',${ALLOW_PRIVATE_IP:-false});"
+    echo "define('ALLOW_DYNAMIC_CREATION',${ALLOW_DYNAMIC_CREATION:-true});"
+    echo "define('NO_SECRET',${NO_SECRET:-false});"
 }
 
 _buildConfig > web/inc/config.inc.php

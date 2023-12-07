@@ -12,7 +12,9 @@ services:
     environment:
       - URL=http://localhost:8080
       - DOMAINS=example.com,orf.at
-
+      - ALLOW_PRIVATE_IP=true
+      - ALLOW_DYNAMIC_CREATION=true
+      - NO_SECRET=true
     ports:
       - mode: host
         protocol: udp
