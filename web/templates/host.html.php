@@ -38,7 +38,7 @@
     <pre><code class="language-curl">curl <?= $url ?>/api/setip/<?= $fulldomain?> \
 -H "secret:<?= $hostdata['secret']?>" \
 --data "ipv4=1.1.1.1" \
---data "ipv6=2001:4860:4860::8888" \</code></pre>
+--data "ipv6=2001:4860:4860::8888"</code></pre>
 
     <h6>Automate the IP update</h6>
     To automate the process you need to run the curl command every 5 minutes or so. You can use a cronjob for that.

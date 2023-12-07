@@ -4,18 +4,19 @@ echo 'Starting Open DynDNS'
 
 cd /var/www/opendyndns
 
-# echo ' [+] Starting php'
-# php-fpm81
+echo ' [+] Starting php'
+php-fpm81
 
-# echo ' [+] Starting nginx'
-# nginx
+echo ' [+] Starting nginx'
+nginx
 
 echo ' [+] Starting dnsmasq'
 dnsmasq
 
 echo ' [+] Setting up config.ini'
 
-
+# permission corrections
+chmod 0440 /etc/sudoers
 
 _buildConfig() {
     echo "<?php"
@@ -25,6 +26,4 @@ _buildConfig() {
 
 _buildConfig > web/inc/config.inc.php
 
-#tail -f logs/*.log
-cd web
-php -S 0.0.0.0:80 index.php
+tail -f logs/*.log
