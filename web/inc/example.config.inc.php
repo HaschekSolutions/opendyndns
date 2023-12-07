@@ -15,6 +15,7 @@ define('ALLOW_PRIVATE_IP', false);
 // automatically create hostnames for your local network without using the web interface
 define('ALLOW_DYNAMIC_CREATION', true);
 
-// if set to true, you can use the API without a needing a secret
+// if set to true, you can use all API calls without a needing a secret
+// secrets will still be created, just not checked
 // please only use this in local environments
 define('NO_SECRET', false);
