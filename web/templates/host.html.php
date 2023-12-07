@@ -24,6 +24,10 @@
         <label>Note: <input type="text" name="note" value="<?= escape($hostdata['note']) ?>"></label>
         <label>IPv4: <?= escape($hostdata['ipv4'])?:'Not set' ?></label>
         <label>IPv6: <?= escape($hostdata['ipv6'])?:'Not set' ?></label>
+        <details>
+            <summary>Secret</summary>
+            <?=$hostdata['secret'];?>
+        </details>
         <label>Last updated: <?= escape($hostdata['lastupdated']?:'Never') ?></label>
         <input type="submit" name="savedata" value="Save">
     </form>

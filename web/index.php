@@ -5,6 +5,8 @@ define('ROOT', dirname(__FILE__));
 require_once(ROOT . DS . 'inc' . DS . 'core.php');
 require_once(ROOT . DS . 'inc' . DS . 'htmx.class.php');
 require_once(ROOT . DS . 'inc' . DS . 'api.class.php');
+if(!file_exists(ROOT . DS . 'inc' . DS . 'config.inc.php'))
+    exit("Config file missing. Please copy inc/config.inc.php.dist to inc/config.inc.php and edit it.");
 require_once(ROOT . DS . 'inc' . DS . 'config.inc.php');
 
 $url = array_filter(explode('/',ltrim(parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH),'/')));
@@ -25,7 +27,7 @@ $return = match ($url[0]) {
     default => '404',
 };
 
-echo $return;
+echo $return.PHP_EOL;
 
 // updateHostname('orf.at','192.168.15.1',[
 //     'name' => 'ORF',

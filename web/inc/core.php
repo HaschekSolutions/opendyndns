@@ -125,10 +125,17 @@ function error($text)
     return renderTemplate('error.html',['errormessage'=>$text]);
 }
 
-function getHostData($hostname)
+function getHostData($hostname,$createifnotexist=false)
 {
     $file = ROOT.DS.'..'.DS.'data'.DS."$hostname.conf";
-    if(!file_exists($file)) return [];
+    if(!file_exists($file) && $createifnotexist===false) return [];
+    else if(!file_exists($file) && $createifnotexist===true)
+    {
+        $hostdata = ['secret'=>bin2hex(random_bytes(32))];
+        updateHostname($hostname,$hostdata);
+        $hostdata['dynamicallycreated'] = true;
+        return $hostdata;
+    }
     $lines = explode("\n",file_get_contents($file));
     
     $json = json_decode(substr($lines[0],2),true);
