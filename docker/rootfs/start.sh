@@ -5,7 +5,7 @@ echo 'Starting Open DynDNS'
 cd /var/www/opendyndns
 
 echo ' [+] Starting php'
-php-fpm81
+php-fpm83
 
 echo ' [+] Starting nginx'
 nginx

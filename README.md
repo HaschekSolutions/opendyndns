@@ -9,8 +9,7 @@
 
 <div align="center">
   
-![](https://img.shields.io/badge/php-8.1%2B-brightgreen.svg)
-![](https://img.shields.io/badge/python-3.11-brightgreen.svg)
+![](https://img.shields.io/badge/php-8.3%2B-brightgreen.svg)
 ![](https://img.shields.io/badge/made%20with-htmx-brightgreen.svg)
 ![](https://img.shields.io/docker/image-size/hascheksolutions/opendyndns/latest?logo=Docker&color=brightgreen)
 [![](https://img.shields.io/docker/pulls/hascheksolutions/opendyndns?color=brightgreen)](https://hub.docker.com/r/hascheksolutions/opendyndns)
