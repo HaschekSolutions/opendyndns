@@ -1,5 +1,7 @@
 <?php if($hostdata['password'] && $_REQUEST['password'] != $hostdata['password'] && $_SESSION[$fulldomain] !==true): ?>
+    
     <form hx-post="/htmx/host" hx-target="#main">
+        <h3>This host has a password configured. Please enter it</h3>
         <input type="hidden" name="hostname" value="<?= $hostname ?>">
         <input type="hidden" name="domain" value="<?= $domain ?>">
         <input type="password" name="password" placeholder="Password">
@@ -20,7 +22,7 @@
         <input type="hidden" name="hostname" value="<?= $hostname ?>">
         <input type="hidden" name="domain" value="<?= $domain ?>">
 
-        <label>(optional) Password to protect this domain: <input name="password" value="<?= $hostdata['password'] ?>"></label>
+        <label>(optional) Password to protect this host: <input name="password" value="<?= $hostdata['password'] ?>"></label>
         <label>Note: <input type="text" name="note" value="<?= escape($hostdata['note']) ?>"></label>
         <label>IPv4: <?= escape($hostdata['ipv4'])?:'Not set' ?></label>
         <label>IPv6: <?= escape($hostdata['ipv6'])?:'Not set' ?></label>
@@ -50,8 +52,9 @@
     Add this line to the crontab:
     <pre><code class="language-bash">*/5 * * * * curl <?= $url ?>/api/setip/<?= $fulldomain?> -H "secret:<?= $hostdata['secret']?>"</code></pre>
     
-
-
+    <h6>Clear IP addresses</h6>
+    <pre><code class="language-curl">curl <?= $url ?>/api/clearips/<?= $fulldomain?> \
+-H "secret:<?= $hostdata['secret']?>"</code></pre>
 </article>
 
 <script>hljs.highlightAll();</script>

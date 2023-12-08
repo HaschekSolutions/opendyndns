@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="/css/fontawesome.min.css">
     <link rel="stylesheet" href="/css/atom-one-dark.min.css">
     <link rel="stylesheet" href="/css/opendyndns.css">
+    <script src="/js/highlight.min.js"></script>
     <title>Open DynDNS</title>
 </head>
 
@@ -15,7 +16,7 @@
     <nav>
         <ul></ul>
         <ul>
-            <li><strong>Open DynDNS</strong></li>
+            <li class="text-center"><a href="/"><img src="/imgs/logo-200.png" alt="Open DynDNS" class="logo"><br/><strong>Open DynDNS</strong></a></li>
         </ul>
         <ul></ul>
     </nav>
@@ -23,6 +24,12 @@
     <button class="htmx-indicator" aria-busy="true">Loading…</button>
 
     <main id="main" class="container">
+
+        <?php if(isset($main)): ?>
+
+            <?= $main; ?>
+
+        <?php else: ?>
 
         <article>
             <h3 class="text-center">Choose your subdomain</h3>
@@ -42,11 +49,11 @@
             </form>
         </article>
 
+        <?php endif; ?>
     </main>
 
     <script src="/js/opendyndns.js"></script>
     <script src="/js/htmx.min.js"></script>
-    <script src="/js/highlight.min.js"></script>
     <script src="/js/curl.min.js"></script>
 </body>
 

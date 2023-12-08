@@ -1,3 +1,12 @@
+main {
+    margin: 0 auto;
+    padding-top: 0 !important;
+}
+
+article {
+    padding-top: 10px;
+}
+
 tr.htmx-swapping td {
     opacity: 0;
     transition: opacity 1s ease-out;
@@ -31,83 +40,6 @@ tr.htmx-swapping td {
     --form-element-spacing-vertical: 0.15rem;
     --form-element-spacing-horizontal: 1rem;
 }
-
-/** dynamic nav bar **/
-
-.topnav {
-    overflow: hidden;
-}
-
-.topnav a {
-    float: left;
-    display: block;
-    text-align: center;
-    padding: 14px 16px;
-    text-decoration: none;
-    font-size: 17px;
-}
-
-.topnav .icon {
-    display: none;
-}
-
-@media screen and (max-width: 775px) {
-    .topnav a:not(:first-child) {
-        display: none;
-    }
-
-    .topnav a.icon {
-        float: right;
-        display: block;
-    }
-}
-
-@media screen and (max-width: 775px) {
-    .topnav.responsive {
-        position: relative;
-    }
-
-    .topnav.responsive a.icon {
-        position: absolute;
-        right: 0;
-        top: 0;
-    }
-
-    .topnav.responsive a {
-        float: none;
-        display: block;
-        text-align: left;
-    }
-}
-
-/** tab support for admin page **/
-
-[role="tabs"] {
-    display: flex;
-  }
-  
-  [role="tabs"] section {
-    display: flex;
-    flex-wrap: wrap;
-    width: 100%;
-  }
-  
-  [role="tabs"] figure {
-    flex-grow: 1;
-    width: 100%;
-    height: 100%;
-    display: none;
-  }
-  
-  [role="tabs"] [type="radio"]:checked + figure {
-    display: block;
-  }
-  
-  nav[role="tab-control"] label.active {
-    color: var(--primary);
-    cursor: pointer;
-  }
-
 
 /** alert styling **/
   

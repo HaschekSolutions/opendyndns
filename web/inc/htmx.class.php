@@ -9,7 +9,9 @@ class HTMX {
 
     function act()
     {
-        $return = match ($this->url[1]) {
+        if($this->url[0]=='htmx')
+            array_shift($this->url);
+        $return = match ($this->url[0]) {
             'host' => $this->renderHost(),
             default => '404',
         };
@@ -18,12 +20,13 @@ class HTMX {
 
     private function renderHost()
     {
-        $hostname = $_REQUEST['hostname'];
-        $domain = $_REQUEST['domain'];
+        $hostname = $_REQUEST['hostname']?:$this->url[1];
+        $domain = $_REQUEST['domain']?:$this->url[2];
         $fulldomain = $hostname.'.'.$domain;
         if(!in_array($domain,explode(',', DOMAINS))) return error('Invalid domain');
         if(!preg_match('/^[a-z0-9-.]+$/',$hostname)) return error('Invalid hostname');
-        $hostdata = getHostData($hostname.'.'.$domain);
+        header('HX-Push-Url: /host/'.$hostname.'/'.$domain);
+        $hostdata = getHostData($fulldomain);
         if($_REQUEST['savedata'])
         {
             $password = $_REQUEST['password'];

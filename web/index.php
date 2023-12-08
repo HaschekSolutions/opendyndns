@@ -24,7 +24,9 @@ $return = match ($url[0]) {
     '',NULL => renderTemplate('index.html',[
         'domains'=>explode(',', DOMAINS),
     ]),
-    default => '404',
+    default => renderTemplate('index.html',[
+        'main'=>(new HTMX($url))->act()
+    ])
 };
 
 echo $return.PHP_EOL;
