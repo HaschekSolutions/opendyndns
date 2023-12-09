@@ -36,6 +36,21 @@
 - Settings per hostname are stored in comments of dnsmasq config files
 - Very small image size (<20MB)
 
+
+# Setup
+
+## DNS
+
+For OpenDynDNS to work you need to have a domain you can configure.
+
+For example if you want to use the subdomain `sub.example.com` as root for your dyn DNS clients, and your OpenDynDNS instance is running on the IP `1.2.3.4` (which you want to access through the domain `dyndns.example.com`) you need to configure two DNS entries:
+
+```zonefile
+# zonefile for example.com
+dyndns IN  A   1.2.3.4              # This is where the web interface will be (dyndns.example.com)
+dyndns IN  NS  dyndns.example.com.  # the nameserver pointing to the machine running the docker container
+```
+
 # API
 
 All API calls need the secret in form of a HTTP header called `SECRET`. The secret can be found in the web interface (unless you set the `NO_SECRET` config variable)
