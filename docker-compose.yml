@@ -1,20 +1,18 @@
 version: '3.9'
 services:
   opendyndns:
-    build:
-      context: .
-      dockerfile: docker/Dockerfile
+    image: 'hascheksolutions/opendyndns:latest'
+    restart: unless-stopped
 
     volumes:
       - './data:/var/www/opendyndns/data'
       - './logs:/var/www/opendyndns/logs'
-      - './web:/var/www/opendyndns/web'
     environment:
-      - URL=http://localhost:8080
+      - URL=https://mydns.example.com
       - DOMAINS=example.com,sub.example.org
-      - ALLOW_PRIVATE_IP=true
-      - ALLOW_DYNAMIC_CREATION=true
-      - NO_SECRET=true
+      - ALLOW_PRIVATE_IP=false
+      - ALLOW_DYNAMIC_CREATION=false
+      - NO_SECRET=false
     ports:
       - mode: host
         protocol: udp

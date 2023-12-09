@@ -80,7 +80,7 @@ class API {
             {
                 if(defined('ALLOW_PRIVATE_IP') && ALLOW_PRIVATE_IP===false)
                 {
-                    if(filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE)) return 'Invalid IP '.$ip.' (in private range)';
+                    if(!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE)) return 'Invalid IP '.$ip.' (in private range)';
                 }
                 if(!filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_RES_RANGE)) return 'Invalid IP '.$ip.' (in reserved range)';
             }
