@@ -12,14 +12,27 @@ class API {
         $return = match ($this->url[1]) {
             'setip' => $this->setIP(),
             'clearips' => $this->clearIPs(),
+            'renewsecret' => $this->renewSecret(),
             default => '404',
         };
         return $return;
     }
 
+    private function renewSecret()
+    {
+        $secret = $_SERVER['HTTP_SECRET']?:$_REQUEST['secret'];
+        $hostname = preg_replace("/[^A-Za-z0-9-.]/", '', $this->url[2]);
+        $data = getHostData($hostname);
+        if(!$data['secret']) return 'Invalid hostname';
+        if($data['secret'] != $secret && NO_SECRET!==true) return 'Invalid secret';
+        $data['secret'] = bin2hex(random_bytes(32));
+        updateHostname($hostname,$data);
+        return $data['secret'];
+    }
+
     private function clearIPs()
     {
-        $secret = $_SERVER['HTTP_SECRET'];
+        $secret = $_SERVER['HTTP_SECRET']?:$_REQUEST['secret'];
         $hostname = preg_replace("/[^A-Za-z0-9-.]/", '', $this->url[2]);
         $data = getHostData($hostname);
         if(!$data['secret']) return 'Invalid hostname';
@@ -33,7 +46,7 @@ class API {
 
     private function setIP()
     {
-        $secret = $_SERVER['HTTP_SECRET'];
+        $secret = $_SERVER['HTTP_SECRET']?:$_REQUEST['secret'];
         $hostname = preg_replace("/[^A-Za-z0-9-.]/", '', $this->url[2]);
         $data = getHostData($hostname,(defined('ALLOW_DYNAMIC_CREATION') && ALLOW_DYNAMIC_CREATION===true));
         if($data['dynamicallycreated']===true) //if this was just created, no need for the secret

@@ -53,12 +53,13 @@ sub IN  NS  dyndns.example.com.  # the nameserver pointing to the machine runnin
 
 # API
 
-All API calls need the secret in form of a HTTP header called `SECRET`. The secret can be found in the web interface (unless you set the `NO_SECRET` config variable)
+All API calls need the secret in form of a HTTP header called `SECRET` or via POST/GET parameter called `secret`. The secret can be found in the web interface (unless you set the `NO_SECRET` config variable)
 
 | Endpoint                         | Explanation                                                                                                                                                                                                                                    | API answer                                           |
 |----------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|------------------------------------------------------|
 | `/setip/yourhost.example.com`    | Updates the IP of the hostname. If no POST vars are supplied, automatically detecting IP from request, if POST var `ipv4` or `ipv6` is provided, updates the host with these IPs | `OK updated [ip]` or the corresponding error message |
 | `/clearips/yourhost.example.com` | Clears all IPs associated with this hostname                                                                                                                                                                                                   | `OK` or the corresponding error message              |
+| `/renewsecret/yourhost.example.com` | Refreshes the secret and returns the new one                                                                                                                                                                                                   | the secret or the corresponding error message              |
 
 
 ## Examples

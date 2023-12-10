@@ -13,9 +13,29 @@ class HTMX {
             array_shift($this->url);
         $return = match ($this->url[0]) {
             'host' => $this->renderHost(),
+            'updateip' => $this->updateIP(),
             default => '404',
         };
         return $return;
+    }
+
+    private function updateIP(){
+        $hostname = $_REQUEST['hostname']?:$this->url[1];
+        $ip = getUserIP();
+        if(!$_SESSION[$hostname]) return error('Invalid session');
+        $hostdata = getHostData($hostname);
+        if(filter_var($ip, FILTER_VALIDATE_IP,FILTER_FLAG_IPV4)) //is the IP an IPv4?
+            $hostdata['ipv4'] = $ip;
+        else if(filter_var($ip, FILTER_VALIDATE_IP,FILTER_FLAG_IPV6)) //is the IP an IPv6?
+            $hostdata['ipv6'] = $ip;
+        $hostdata['lastupdated'] = date('Y-m-d H:i:s');
+        updateHostname($hostname,$hostdata);
+
+        return '
+        <label>IPv4: '.($hostdata['ipv4']?:'Not set').'</label>
+        <label>IPv6: '.($hostdata['ipv6']?:'Not set').'</label>
+        ';
+
     }
 
     private function renderHost()

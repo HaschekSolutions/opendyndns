@@ -1,5 +1,8 @@
 # Rolling
 
+# v0.0.4
+- Added "reload secret" API and UI
+- Updated UI so IP can be cloned from the UI
 
 # v0.0.3
 - Fixed bug that all ips are flagged as private range

@@ -24,14 +24,19 @@
 
         <label>(optional) Password to protect this host: <input name="password" value="<?= $hostdata['password'] ?>"></label>
         <label>Note: <input type="text" name="note" value="<?= escape($hostdata['note']) ?>"></label>
-        <label>IPv4: <?= escape($hostdata['ipv4'])?:'Not set' ?></label>
-        <label>IPv6: <?= escape($hostdata['ipv6'])?:'Not set' ?></label>
-        <details>
-            <summary>Secret</summary>
-            <?=$hostdata['secret'];?>
-        </details>
-        <label>Last updated: <?= escape($hostdata['lastupdated']?:'Never') ?></label>
         <input type="submit" name="savedata" value="Save">
+        <div id="ips">
+            <label>IPv4: <?= escape($hostdata['ipv4'])?:'Not set' ?></label>
+            <label>IPv6: <?= escape($hostdata['ipv6'])?:'Not set' ?></label>
+        </div>
+        <button hx-get="/htmx/updateip/<?=$fulldomain?>" hx-target="#ips">Set to current IP (<?= getUserIP()?>)</button>
+        <label>Last updated: <?= escape($hostdata['lastupdated']?:'Never') ?></label>
+        <details>
+            <summary>Show secret</summary>
+            <div id="the-secret"><?=$hostdata['secret'];?></div>
+            <button hx-get="/api/renewsecret/<?=$fulldomain;?>?secret=<?=$hostdata['secret']?>" hx-target="#the-secret"><i class="fas fa-sync-alt"></i> Renew secret</button>
+        </details>
+        
     </form>
 
     <h3>How to use</h3>

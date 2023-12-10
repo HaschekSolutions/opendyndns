@@ -14,10 +14,10 @@ function updateHostname($hostname,$config)
     if($config['ipv6'])
         $data.= "\naddress=/$hostname/".$config['ipv6'];
 
+    file_put_contents($file, $data);
     //time to restart the service?
     if($config['ipv4'] || $config['ipv6'])
         restartDNSMASQ();
-    file_put_contents($file, $data);
     error_log("[i] Updated hostfile for $hostname");
 }
 
