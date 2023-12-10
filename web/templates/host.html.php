@@ -8,7 +8,7 @@
         <input type="submit" value="Login">
     </form>
 <?php return;
-    elseif($hostdata['password'] && $_REQUEST['password'] == $hostdata['password']):
+    elseif(($hostdata['password'] && $_REQUEST['password'] == $hostdata['password']) || !$hostdata['password']):
         $_SESSION[$fulldomain] = true;
     elseif($hostdata['password'] && $_REQUEST['password'] !='' && $_REQUEST['password'] != $hostdata['password']):
         echo error('Invalid password');
