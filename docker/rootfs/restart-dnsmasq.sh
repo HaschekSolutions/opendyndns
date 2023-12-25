@@ -1,3 +1,3 @@
 #!/bin/ash
 
-killall dnsmasq && dnsmasq
+killall dnsmasq ; dnsmasq
