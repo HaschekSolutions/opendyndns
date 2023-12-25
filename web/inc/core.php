@@ -14,7 +14,22 @@ function updateHostname($hostname,$config)
     if($config['ipv6'])
         $data.= "\naddress=/$hostname/".$config['ipv6'];
 
-    file_put_contents($file, $data);
+    var_dump($config['advanceddns']);
+
+    if($config['advanceddns'])
+        foreach($config['advanceddns'] as $entry)
+        {
+            switch($entry['type']){
+                case 'TXT':
+                    $data.= "\ntxt-record=".$entry['hostname'].".$hostname,".$entry['value'];
+                break;
+                case 'CNAME':
+                    $data.= "\ncname=".$entry['hostname'].".$hostname,".$entry['value'];
+                break;
+            }
+        }
+
+    if(!file_put_contents($file, $data))exit('Failed to write to file');
     //time to restart the service?
     if($config['ipv4'] || $config['ipv6'])
         restartDNSMASQ();
