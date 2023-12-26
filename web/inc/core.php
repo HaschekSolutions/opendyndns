@@ -24,6 +24,18 @@ function updateHostname($hostname,$config)
                 case 'CNAME':
                     $data.= "\ncname=".$entry['hostname'].".$hostname,".$entry['value'];
                 break;
+                case 'A':
+                    $data.= "\naddress=".$entry['hostname'].".$hostname,".$entry['value'];
+                break;
+                case 'AAAA':
+                    $data.= "\naddress6=".$entry['hostname'].".$hostname,".$entry['value'];
+                break;
+                case 'MX':
+                    $data.= "\nmx-host=".$entry['hostname'].".$hostname,".$entry['value'];
+                break;
+                case 'SRV':
+                    $data.= "\nsrv-host=".$entry['hostname'].".$hostname,".$entry['value'];
+                break;
             }
         }
 

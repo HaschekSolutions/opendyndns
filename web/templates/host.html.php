@@ -64,6 +64,8 @@ endif; ?>
                     <div>
                         <label for="new_type">Record type</label>
                         <select id="new_type" name="new_type" required>
+                            <option value="A">A</option>
+                            <option value="AAAA">AAAA</option>
                             <option value="TXT">TXT</option>
                             <option value="CNAME">CNAME</option>
                         </select>
