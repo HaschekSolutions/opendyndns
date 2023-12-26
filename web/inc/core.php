@@ -14,14 +14,12 @@ function updateHostname($hostname,$config)
     if($config['ipv6'])
         $data.= "\naddress=/$hostname/".$config['ipv6'];
 
-    var_dump($config['advanceddns']);
-
     if($config['advanceddns'])
         foreach($config['advanceddns'] as $entry)
         {
             switch($entry['type']){
                 case 'TXT':
-                    $data.= "\ntxt-record=".$entry['hostname'].".$hostname,".$entry['value'];
+                    $data.= "\ntxt-record=".$entry['hostname'].".$hostname,\"".$entry['value'].'"';
                 break;
                 case 'CNAME':
                     $data.= "\ncname=".$entry['hostname'].".$hostname,".$entry['value'];

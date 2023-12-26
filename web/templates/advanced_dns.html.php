@@ -14,7 +14,7 @@
                 <td><?= $entry['hostname'] ?></td>
                 <td><?= $entry['type'] ?></td>
                 <td><?= $entry['value'] ?></td>
-                <td><button hx-get="/api/deletedns/<?= $fulldomain ?>?hostname=<?= $entry['hostname'] ?>&type=<?= $entry['type'] ?>" hx-target="#advanced"><i class="fas fa-trash"></i></button></td>
+                <td><button hx-get="/htmx/deletedns/<?= $fulldomain ?>/<?= $entry['hostname'] ?>/<?= $entry['type'] ?>" hx-confirm="Do you really want to delete this entry?" hx-target="#advanced"><i class="fas fa-trash"></i></button></td>
             </tr>
         <?php endforeach; ?>
     </tbody>
