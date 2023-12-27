@@ -40,6 +40,7 @@ class API {
         $data['ipv4'] = '';
         $data['ipv6'] = '';
         $data['lastupdated'] = date('Y-m-d H:i:s');
+        header('HX-Refresh:true');
         updateHostname($hostname,$data);
         return 'OK';
     }

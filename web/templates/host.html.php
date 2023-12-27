@@ -30,6 +30,7 @@ endif; ?>
             <label>IPv6: <?= escape($hostdata['ipv6']) ?: 'Not set' ?></label>
         </div>
         <button hx-get="/htmx/updateip/<?= $fulldomain ?>" hx-target="#ips">Set to current IP (<?= getUserIP() ?>)</button>
+        <button hx-get="/api/clearips/<?= $fulldomain ?>?secret=<?= $hostdata['secret']; ?>" hx-target="#ips" class="contrast">Clear IPs</button>
         <label>Last updated: <?= escape($hostdata['lastupdated'] ?: 'Never') ?></label>
         <details>
             <summary>Show secret</summary>
@@ -57,8 +58,8 @@ endif; ?>
                 <div class="grid">
                     <div>
                         <label for="new_hostname">
-                            Hostname
-                            <input type="text" id="new_hostname" name="new_hostname" required>
+                            Hostname <small>(use @ for root domain)</small>
+                            <input type="text" id="new_hostname" name="new_hostname" placeholder="eg: www" value="@" required>
                         </label>
                     </div>
                     <div>
@@ -74,7 +75,7 @@ endif; ?>
                     <div>
                         <label for="new_value">
                             Value
-                            <input type="text" id="new_value" name="new_value" required>
+                            <input type="text" id="new_value" name="new_value" placeholder="eg 1.1.1.1" required>
                         </label>
                     </div>
                 </div>

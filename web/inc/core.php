@@ -5,9 +5,26 @@ function restartDNSMASQ() {
     error_log("[i] Restarted dnsmasq");
 }
 
+function checkDNSMASQConfig($configfile)
+{
+    //dnsmasq --test -C $configfile
+
+    $output = [];
+    $return = 0;
+    exec("dnsmasq --test -C $configfile",$output,$return);
+    if($return!=0)
+    {
+        error_log("[!] dnsmasq config test failed");
+        error_log(implode("\n",$output));
+        return false;
+    }
+    return true;
+}
+
 function updateHostname($hostname,$config)
 {
     $file = ROOT.DS.'..'.DS.'data'.DS."$hostname.conf";
+    $tmpfile = '/tmp/'.$hostname.'.conf';
     $data = "# ".json_encode($config);
     if($config['ipv4'])
         $data.= "\naddress=/$hostname/".$config['ipv4'];
@@ -15,34 +32,49 @@ function updateHostname($hostname,$config)
         $data.= "\naddress=/$hostname/".$config['ipv6'];
 
     if($config['advanceddns'])
+    {
         foreach($config['advanceddns'] as $entry)
         {
+            $subhost = $entry['hostname'];
+            if($subhost=='@')
+                $subhost=false;
             switch($entry['type']){
                 case 'TXT':
-                    $data.= "\ntxt-record=".$entry['hostname'].".$hostname,\"".$entry['value'].'"';
+                    $data.= "\ntxt-record=".($subhost?"$subhost.":'')."$hostname,\"".$entry['value'].'"';
                 break;
                 case 'CNAME':
-                    $data.= "\ncname=".$entry['hostname'].".$hostname,".$entry['value'];
+                    $data.= "\ncname=".($subhost?"$subhost.":'')."$hostname,".$entry['value'];
                 break;
                 case 'A':
-                    $data.= "\naddress=".$entry['hostname'].".$hostname,".$entry['value'];
+                    $data.= "\naddress=".($subhost?"$subhost.":'')."$hostname,".$entry['value'];
                 break;
                 case 'AAAA':
-                    $data.= "\naddress6=".$entry['hostname'].".$hostname,".$entry['value'];
+                    $data.= "\naddress6=".($subhost?"$subhost.":'')."$hostname,".$entry['value'];
                 break;
                 case 'MX':
-                    $data.= "\nmx-host=".$entry['hostname'].".$hostname,".$entry['value'];
+                    $data.= "\nmx-host=".($subhost?"$subhost.":'')."$hostname,".$entry['value'].",".$entry['priority'];
                 break;
                 case 'SRV':
-                    $data.= "\nsrv-host=".$entry['hostname'].".$hostname,".$entry['value'];
+                    $data.= "\nsrv-host=".($subhost?"$subhost.":'')."$hostname,".$entry['value'].",".$entry['priority'].",".$entry['weight'];
                 break;
             }
         }
+    }
 
-    if(!file_put_contents($file, $data))exit('Failed to write to file');
-    //time to restart the service?
-    if($config['ipv4'] || $config['ipv6'])
-        restartDNSMASQ();
+    if(!file_put_contents($tmpfile, $data))exit('Failed to write to temp file');
+    
+    if(!checkDNSMASQConfig($tmpfile))
+    {
+        error_log("[!] dnsmasq config test failed not saving changes");
+        return false;
+    }
+    else {
+        if(file_exists($tmpfile))
+        unlink($tmpfile);
+        if(!file_put_contents($file, $data))exit('Failed to write to config file');
+    }
+
+    restartDNSMASQ();
     error_log("[i] Updated hostfile for $hostname");
 }
 

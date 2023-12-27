@@ -23,18 +23,17 @@ class HTMX {
 
     private function deleteDNS(){
         $fulldomain = $this->url[1];
-        $todelete_hostname = $this->url[2];
-        $todelete_type = $this->url[3];
+        $todelete = intval($this->url[2]);
         if(!$_SESSION[$fulldomain]) return error('Invalid session');
-        if(!$todelete_hostname || !$todelete_type) return error('Something is missing in your request');
+        if(!is_numeric($todelete)) return error('Something is missing in your request');
         if(!preg_match('/^[a-z0-9-.]+$/',$fulldomain)) return error('Invalid hostname');
         
         $hostdata = getHostData($fulldomain);
         if(!$hostdata) return error('Invalid hostname');
         $new_advanceddns = [];
-        foreach($hostdata['advanceddns'] as $entry)
+        foreach($hostdata['advanceddns'] as $key => $entry)
         {
-            if($entry['hostname'] != $todelete_hostname || $entry['type'] != $todelete_type)
+            if($key != $todelete)
                 $new_advanceddns[] = $entry;
         }
         $hostdata['advanceddns'] = $new_advanceddns;
@@ -60,22 +59,34 @@ class HTMX {
             $new_hostname = $_REQUEST['new_hostname'];
             $new_type = $_REQUEST['new_type'];
             $new_value = $_REQUEST['new_value'];
+            
             // $new_ttl = $_REQUEST['new_ttl'];
             // $new_priority = $_REQUEST['new_priority'];
 
-            if(!preg_match('/^[a-z0-9-.]+$/',$new_hostname)) return error('Invalid hostname');
+            if($new_hostname!='@' && !preg_match('/^[a-z0-9-.]+$/',$new_hostname)) return error('Invalid hostname');
             if(!in_array($new_type,['A','AAAA','CNAME','MX','TXT','SRV','NS','CAA'])) return error('Invalid type');
             // if(!preg_match('/^[0-9]+$/',$new_ttl)) return error('Invalid TTL');
             // if(!preg_match('/^[0-9]+$/',$new_priority)) return error('Invalid priority');
 
             switch($new_type){
                 case 'TXT':
-                    $new_value = '"'.addslashes($new_value).'"';
+                    $new_value = addslashes(str_replace('"','',$new_value));
                 break;
                 case 'CNAME':
-                    if(!filter_var($new_value, FILTER_VALIDATE_IP) && !filter_var($new_value, FILTER_FLAG_HOSTNAME))
+                    if(!filter_var($new_value, FILTER_VALIDATE_IP) && !filter_var($new_value, FILTER_VALIDATE_DOMAIN,FILTER_FLAG_HOSTNAME ))
                         $error= error('Invalid value. CNAME record values have to be IP Addresses or hostnames');
                 break;
+            }
+
+            /*
+            "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA3sGmbQA4anI5Tw1jOkOWHFN9giT98U+8Fc0KXu53bnbFOhqzgePHNb324bjBOV0/SZkCEd/+Hv5089cCXNXptpN4rwVGcZuMGYAuF44CtyXO4ZA/jqOKuYh6y14NQRcH4ntCv5YC9ZSh/PGZmnmr4tCSsvK/au7ooJyRjy5OaI51hA+qtregvr9tmvRF6GSw/9F0pz+cJwUWHhHb21+tXZb6C39MNyBCOncy0I1PyscQeixKTBe5Zlo1Jbyea7i4j1jhtVrATf+y6oIRA+MBeSbJtAQH6Kpy6qpW0PVz1PU1qRQwQ3yI5l88/sgkU8IKVsUy7puV4ey15GP0wuTuJQIDAQAB"
+            */
+            
+
+            foreach($hostdata['advanceddns'] as $entry)
+            {
+                if($entry['hostname'] == $new_hostname && $entry['type'] == $new_type && $entry['value'] == $new_value)
+                    $error = error('This entry already exists');
             }
 
             if(!$error)
