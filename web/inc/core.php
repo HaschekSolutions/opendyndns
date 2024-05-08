@@ -26,10 +26,12 @@ function updateHostname($hostname,$config)
     $file = ROOT.DS.'..'.DS.'data'.DS."$hostname.conf";
     $tmpfile = '/tmp/'.$hostname.'.conf';
     $data = "# ".json_encode($config);
+    $data.= "\nlocal=/$hostname/";
     if($config['ipv4'])
         $data.= "\naddress=/$hostname/".$config['ipv4'];
     if($config['ipv6'])
         $data.= "\naddress=/$hostname/".$config['ipv6'];
+
 
     if($config['advanceddns'])
     {
