@@ -29,7 +29,7 @@ WORKDIR /var/www/opendyndns
 VOLUME /var/www/opendyndns/data
 VOLUME /var/www/opendyndns/logs
 
-EXPOSE 80 25 465
+EXPOSE 80
 
 #CMD ["/bin/ash"]
 ENTRYPOINT ["/etc/start.sh"]
